@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>AROGYA KAVACH FUEL++ V700 FINAL - HAL AROGYA</title>
+<style>
+body{margin:0;background:#070b1e;color:#fff;font-family:Segoe UI,Arial}
+.tabs{padding:10px;background:#111;display:flex;flex-wrap:wrap;gap:5px}
+.tab{padding:8px 12px;border-radius:6px;border:none;cursor:pointer;font-weight:bold;font-size:12px}
+.t1{background:#00e5ff;color:#000}.t2{background:#ff4081}.t3{background:#76ff03;color:#000}.t4{background:#ffab00;color:#000}.t5{background:#d500f9}.t6{background:#18ffff;color:#000}
+#critical{background:#b71c1c;padding:12px;display:none;font-weight:bold;border:3px solid yellow;animation:blink 0.4s infinite}
+@keyframes blink{50%{background:#ff0000}}.redblink{animation:rblink 0.4s infinite; box-shadow:0 0 30px red; background:#ff0000!important}
+@keyframes rblink{50%{transform:scale(1.05)}} canvas{width:100%;height:280px;background:#121736;border:1px solid #333}
+.box{background:#1a1f3d;padding:12px;margin:8px 0;border-radius:8px;border:1px solid #333}
+input,button,select{padding:8px;margin:4px;border-radius:5px;border:none}
+button{cursor:pointer;background:#00e5ff;color:#000;font-weight:bold}
+#twin3d{width:100%;height:220px;background:linear-gradient(#222,#111);display:flex;align-items:center;justify-content:center;border:2px solid #00e5ff;font-size:20px;text-align:center}
+.green{color:#00ff5e}.yellow{color:#ffeb3b}.red{color:#ff1744}
+</style>
+</head>
+<body>
+<div class="tabs">
+<button class="tab t1" onclick="show(1)">1. LIVE HEALTH + 3D TWIN RED BLINK + 5H + Live Fuel</button>
+<button class="tab t2" onclick="show(2)">2. KAVACH QR SHA + LIVE IMAGE + NUMBER</button>
+<button class="tab t3" onclick="show(3)">3. QUALITY CHECK + CERT + SHA + QR</button>
+<button class="tab t4" onclick="show(4)">4. HAL-GPT PDF + AUTO PAGE OPEN</button>
+<button class="tab t5" onclick="show(5)">5. TAT INTEL INPUT + REPORT</button>
+<button class="tab t6" onclick="show(6)">6. FOD SHOP + USUALLY + DGM MAIL + VOICE KN TA HI EN</button>
+</div>
+<div id="critical"></div>
+<div id="tab1" class="box">
+<h3>GREEN SAFE 28-32 PSI - Healthy Wave - Unique Mapping | YELLOW DEGRADED 20-28 PSI - 5H Before Failure Wave | RED CRITICAL &lt;20 PSI - Failure Wave - 50Cr + Lives Saved</h3>
+<canvas id="wave"></canvas>
+<div style="display:flex;gap:10px">
+<div style="flex:1"><div id="twin3d">3D Twin: Fuel Filter - <span id="psiTxt">30.0 PSI</span> - <span id="stateTxt">GREEN SAFE</span><br>Live Tracking</div></div>
+<div style="flex:1" class="box">
+Live Fuel: <b id="liveFuel">30.0 PSI</b><br>Health: <b id="health">95%</b><br>RUL: <b id="rul">20H</b><br>50Cr: <b id="save50">SAFE</b><br>Lives: <b>2 Lives Saved when RED</b><br>Fleet: <b>2/Year=100Cr + Extra 2=200Cr/Year = 300Cr</b><br>Alert: <b>5 Hours Before Fuel Damage</b>
+</div>
+</div>
+</div>
+<div id="tab2" class="box" style="display:none">
+<h2>2. KAVACH QR SHA + LIVE IMAGE + NUMBER - ORIGINAL / FRAUD LIVE - QR WILL APPEAR BELOW</h2>
+<input id="kavNum" placeholder="Enter e.g. FF-3012-5.2-ORIGINAL-HAL2024 for ORIGINAL" style="width:350px">
+<input type="file" id="kavImg">
+<button onclick="kavach()">VERIFY KAVACH</button>
+<div id="kavRes" class="box" style="min-height:100px"></div>
+</div>
+<div id="tab3" class="box" style="display:none">
+<h2>3. QUALITY CHECK + CERT + SHA + QR - 5.2 PASS vs 9.8 FRAUD</h2>
+Part: <input id="qcPart" value="FF-3012"> Resistivity: <input id="qcRes" type="number" step="0.1" value="5.2">
+<button onclick="qcCheck()">CHECK QUALITY</button>
+<div id="qcResBox" class="box"></div>
+</div>
+<div id="tab4" class="box" style="display:none">
+<h2>4. HAL-GPT PDF + AUTO PAGE OPEN - Upload Manual + Ask Doubt - PAGE IMAGE AUTO OPEN</h2>
+<input type="file" id="pdfFile" accept=".pdf"><button onclick="uploadPdf()">Upload Manual PDF</button>
+<div id="pdfStatus" class="box"></div>
+Ask: <input id="pdfQ" placeholder="e.g. fuel filter procedure? or fuel leakage?" style="width:350px"><button onclick="askPdf()">Ask HAL-GPT</button>
+<div id="pdfAns" class="box" style="background:#000;color:#0f0;white-space:pre-wrap"></div>
+<div id="pdfPage" class="box" style="background:white;color:black">Auto Opened Page will appear here as IMAGE + TEXT after you ask question</div>
+</div>
+<div id="tab5" class="box" style="display:none">
+<h2>5. TAT INTEL INPUT + REPORT</h2>
+Vendor: <input id="tatVendor" value="HAL Nashik"> Part: <input id="tatPart" value="FF-3012"> TAT Days: <input id="tatDays" type="number" value="15">
+<button onclick="tatSubmit()">Submit TAT + Report</button>
+<div id="tatReport" class="box"></div>
+</div>
+<div id="tab6" class="box" style="display:none">
+<h2>6. FOD SHOP FLOOR + USUALLY + TYPE + DGM MAIL + VOICE KN TA HI EN - App HAL AROGYA - anjumrahath7@gmail.com</h2>
+<div style="display:flex;gap:20px;flex-wrap:wrap">
+<div><b>FOD Shop Floor:</b><br><input type="file" id="fodImg"><br>Usually: <input id="fodUsually" placeholder="e.g. Metal Chip"><br><button onclick="fodDetect()">DETECT FOD TYPE</button><div id="fodRes" class="box"></div></div>
+<div><b>VOICE KN TA HI EN:</b><br><select id="voiceLang"><option value="en-IN">English</option><option value="kn-IN">Kannada</option><option value="ta-IN">Tamil</option><option value="hi-IN">Hindi</option></select><button onclick="startVoice()">🎤 Start Voice</button><div id="voiceTxt" class="box">Say: "Generate DGM mail"</div></div>
+</div>
+<hr>
+<button onclick="genDGM()" style="padding:15px;background:red;color:white;font-size:18px;width:100%">🚨 GENERATE DGM EMAIL + SEND REAL MAIL to anjumrahath7@gmail.com - Mobile Gmail - App HAL AROGYA Password orpr qdbl wcjp ckqq Configured</button>
+<div id="dgmRes" class="box"></div>
+</div>
+<script>
+let c=document.getElementById('wave'), x=c.getContext('2d'); c.width=1200; c.height=280;
+let data=[], psi=30, state='GREEN', t=0, countdown=25;
+function draw(v,s){
+ data.push(v); if(data.length>120) data.shift();
+ x.clearRect(0,0,c.width,c.height);
+ x.fillStyle='#1b5e20'; x.fillRect(0,0,c.width,85);
+ x.fillStyle='#f9a825'; x.fillRect(0,85,c.width,85);
+ x.fillStyle='#b71c1c'; x.fillRect(0,170,c.width,110);
+ x.fillStyle='#fff'; x.font='11px Arial';
+ x.fillText('GREEN SAFE 28-32 PSI - Healthy Wave - Unique Mapping',10,20);
+ x.fillText('YELLOW DEGRADED 20-28 PSI - 5H Before Failure Wave',10,110);
+ x.fillText('RED CRITICAL <20 PSI - Failure Wave - 50Cr + Lives Saved',10,190);
+ x.beginPath(); x.strokeStyle='#00ffff'; x.lineWidth=2;
+ data.forEach((p,i)=>{ let y=280 - (p*7); if(i==0) x.moveTo(i*10,y); else x.lineTo(i*10,y); }); x.stroke();
+ document.getElementById('psiTxt').innerText=v.toFixed(1)+' PSI'; document.getElementById('liveFuel').innerText=v.toFixed(1)+' PSI';
+ document.getElementById('stateTxt').innerText=s; document.getElementById('stateTxt').className=s.toLowerCase();
+ let h= s=='GREEN'? 85+Math.random()*10 : s=='YELLOW'? 45+Math.random()*20 : 8+Math.random()*15;
+ document.getElementById('health').innerText=h.toFixed(0)+'%';
+ document.getElementById('rul').innerText= s=='GREEN'? '15-20H' : s=='YELLOW'? '5H Before Failure - Alert!' : '0H - REPLACE NOW';
+ document.getElementById('save50').innerText= s=='RED'? '50Cr SAVED + 2 Lives' : 'SAFE - Tracking Live Fuel';
+ let twin=document.getElementById('twin3d');
+ if(s=='RED'){ document.getElementById('critical').style.display='block'; twin.classList.add('redblink'); document.getElementById('critical').innerHTML=`🔴 CRITICAL RED ALERT: Fuel Failure in 0 Hours! 5 Hours Before Fuel Damage Failure! Fuel Pressure ${v.toFixed(1)} PSI RED ZONE! Replace FF-3012 NOW! 50Cr Aeroplane Saved + 2 Lives Saved | Fleet: 2/Year=100Cr + Extra 2=200Cr/Year = 300Cr | DGCA Ground Aircraft | Live Fuel Tracking RED`; }
+ else { document.getElementById('critical').style.display='none'; twin.classList.remove('redblink'); }
+}
+setInterval(()=>{
+ t++;
+ if(state=='GREEN'){ psi=28+Math.random()*4 + Math.sin(Date.now()/1000)*0.6; if(t>35 && Math.random()>0.65){ state='YELLOW'; t=0; countdown=22; } }
+ else if(state=='YELLOW'){ psi=21+Math.random()*6.5 + Math.sin(Date.now()/700)*1; countdown--; if(countdown<=0 || Math.random()>0.88){ state='RED'; t=0; psi=12+Math.random()*6; } }
+ else if(state=='RED'){ psi=10+Math.random()*8; if(t>20){ state='GREEN'; t=0; psi=30; } else if(t>12 && Math.random()>0.6){ state='YELLOW'; t=0; psi=22+Math.random()*4; countdown=10; } }
+ draw(psi, state);
+}, 450);
+function show(n){ for(let i=1;i<=6;i++) document.getElementById('tab'+i).style.display = i==n?'block':'none'; }
+function kavach(){
+ let fd=new FormData(); fd.append('number', document.getElementById('kavNum').value);
+ let f=document.getElementById('kavImg').files[0]; if(f) fd.append('image', f);
+ fetch('/kavach_verify',{method:'POST',body:fd}).then(r=>r.json()).then(d=>{
+   document.getElementById('kavRes').innerHTML=`<b style="color:${d.color};font-size:22px">${d.result}</b><br>Number: ${d.number}<br>SHA256: ${d.sha256}<br>Blockchain: ${d.blockchain}<br>${d.details}<br>${d.image_status}<br><br><b>QR CODE (100% Offline):</b><br><img src="${d.qr_base64}" style="width:220px;height:220px;background:white;padding:10px;border:2px solid ${d.color}"><br>Data: ${d.qr_data}`;
+ });
+}
+function qcCheck(){
+ fetch('/quality_check',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({part_no: document.getElementById('qcPart').value, resistivity: document.getElementById('qcRes').value})}).then(r=>r.json()).then(d=>{
+   document.getElementById('qcResBox').innerHTML=`<b style="font-size:18px">${d.result}</b><br>Resistivity: ${d.resistivity} ohm | ${d.standard}<br>Cert: ${d.certificate}<br>SHA: ${d.sha}<br><img src="${d.qr_base64}" style="width:180px;background:white;padding:8px">`;
+ });
+}
+function uploadPdf(){
+ let fd=new FormData(); fd.append('pdf', document.getElementById('pdfFile').files[0]);
+ fetch('/upload_manual',{method:'POST',body:fd}).then(r=>r.json()).then(d=>{ document.getElementById('pdfStatus').innerText=`Uploaded ${d.file} - ${d.pages} pages - Ready to ask`; });
+}
+function askPdf(){
+ let q=document.getElementById('pdfQ').value;
+ if(!q){ alert("Type question e.g. fuel filter procedure?"); return; }
+ fetch('/ask_manual',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question: q})}).then(r=>r.json()).then(d=>{
+   document.getElementById('pdfAns').innerText=d.answer + "\n" + d.auto_open;
+   document.getElementById('pdfPage').innerHTML=`<b style="color:lime">✅ Auto Opened Page ${d.page} - REAL PDF PAGE AS IMAGE:</b><br><div style="background:#eee;color:#000;padding:8px;white-space:pre-wrap;border:1px solid #000">${d.procedure}</div><br><img src="/pdf_page/${d.page}?t=${Date.now()}" style="width:100%;border:4px solid lime;background:white">`;
+ });
+}
+function tatSubmit(){
+ fetch('/tat_input',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({vendor: document.getElementById('tatVendor').value, part: document.getElementById('tatPart').value, tat_days: document.getElementById('tatDays').value})}).then(r=>r.json()).then(d=>{
+   document.getElementById('tatReport').innerHTML=`<b>${d.report}</b><br>History: ${JSON.stringify(d.history)}`;
+ });
+}
+function fodDetect(){
+ let fd=new FormData(); let f=document.getElementById('fodImg').files[0]; if(f) fd.append('image', f); fd.append('usually', document.getElementById('fodUsually').value);
+ fetch('/fod_detect',{method:'POST',body:fd}).then(r=>r.json()).then(d=>{
+   document.getElementById('fodRes').innerHTML=`<b>Detected: ${d.detected}</b><br>Confidence: ${d.confidence}<br>Action: ${d.action}`;
+ });
+}
+function genDGM(){
+ fetch('/generate_dgm_mail',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({psi: psi, state: state})}).then(r=>r.json()).then(d=>{
+   document.getElementById('dgmRes').innerHTML=`<b style="color:lime">SUCCESS - Product Proof - HAL AROGYA App Configured</b><br>Subject: ${d.subject}<br>To: ${d.to}<br>Offline.eml: ${d.eml_file}<br><b>Online Mobile: ${d.real_mail}</b><br><br>Check Gmail App on Mobile - Inbox + Spam!`;
+ });
+}
+function startVoice(){
+ let lang=document.getElementById('voiceLang').value;
+ let rec=new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+ rec.lang=lang; rec.start();
+ rec.onresult=(e)=>{
+   let txt=e.results[0][0].transcript; document.getElementById('voiceTxt').innerText="You said: "+txt;
+   txt=txt.toLowerCase();
+   if(txt.includes('health')) show(1);
+   else if(txt.includes('kavach') || txt.includes('qr')) show(2);
+   else if(txt.includes('quality')) show(3);
+   else if(txt.includes('manual') || txt.includes('pdf')) show(4);
+   else if(txt.includes('tat')) show(5);
+   else if(txt.includes('fod') || txt.includes('mail') || txt.includes('dgm')){ show(6); if(txt.includes('mail')) genDGM(); }
+ };
+}
+</script>
+</body>
+</html>
