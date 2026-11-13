@@ -2,167 +2,220 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>AROGYA KAVACH FUEL++ V700 FINAL - HAL AROGYA</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HAL AROGYA | Fuel Intelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
-body{margin:0;background:#070b1e;color:#fff;font-family:Segoe UI,Arial}
-.tabs{padding:10px;background:#111;display:flex;flex-wrap:wrap;gap:5px}
-.tab{padding:8px 12px;border-radius:6px;border:none;cursor:pointer;font-weight:bold;font-size:12px}
-.t1{background:#00e5ff;color:#000}.t2{background:#ff4081}.t3{background:#76ff03;color:#000}.t4{background:#ffab00;color:#000}.t5{background:#d500f9}.t6{background:#18ffff;color:#000}
-#critical{background:#b71c1c;padding:12px;display:none;font-weight:bold;border:3px solid yellow;animation:blink 0.4s infinite}
-@keyframes blink{50%{background:#ff0000}}.redblink{animation:rblink 0.4s infinite; box-shadow:0 0 30px red; background:#ff0000!important}
-@keyframes rblink{50%{transform:scale(1.05)}} canvas{width:100%;height:280px;background:#121736;border:1px solid #333}
-.box{background:#1a1f3d;padding:12px;margin:8px 0;border-radius:8px;border:1px solid #333}
-input,button,select{padding:8px;margin:4px;border-radius:5px;border:none}
-button{cursor:pointer;background:#00e5ff;color:#000;font-weight:bold}
-#twin3d{width:100%;height:220px;background:linear-gradient(#222,#111);display:flex;align-items:center;justify-content:center;border:2px solid #00e5ff;font-size:20px;text-align:center}
-.green{color:#00ff5e}.yellow{color:#ffeb3b}.red{color:#ff1744}
+:root{--bg:#070b1f;--card:#10173a;--card2:#151e4a;--border:#1d2758;--yellow:#ffc400;--cyan:#00e5ff;--green:#00e676;--red:#ff1744}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:#e8ecff;font-family:'Inter',sans-serif}
+.header{background:#0a1030;border-bottom:1px solid var(--border);padding:14px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:99}
+.logo{display:flex;gap:10px;align-items:center}
+.logo-icon{width:36px;height:36px;background:var(--yellow);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;color:#000}
+.logo h1{margin:0;font-size:14px;font-weight:600}
+.logo small{font-size:9px;color:#7a86b8;letter-spacing:0.8px}
+.tabs{display:flex;gap:6px;background:#080e2a;padding:10px 14px;overflow-x:auto;border-bottom:1px solid var(--border)}
+.tab{padding:9px 14px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:#8a9bff;cursor:pointer;font-weight:600;font-size:10px;letter-spacing:0.6px;white-space:nowrap}
+.tab.active{background:var(--yellow);color:#000;border-color:var(--yellow)}
+.box{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;margin:10px}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.kpi{background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:14px}
+.kpi-v{font-family:'JetBrains Mono';font-size:18px;font-weight:700;color:#fff}.kpi-l{font-size:9px;color:#7a86b8;margin-top:4px}
+canvas{width:100%;height:300px;background:#0a1030;border-radius:10px;border:1px solid var(--border)}
+#critical{display:none;background:var(--red);padding:12px;border-radius:10px;font-weight:700;text-align:center;margin:10px}
+#twin3d{height:150px;background:var(--card2);border:1px solid var(--border);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono';font-weight:700}
+.verified-card{border-left:4px solid var(--green);background:linear-gradient(135deg,#0a2218,#10173a);border-radius:10px;padding:16px;margin-top:12px}
+.fraud-card{border-left:4px solid var(--red);background:linear-gradient(135deg,#2a1018,#10173a);border-radius:10px;padding:16px;margin-top:12px}
+.warning-card{border-left:4px solid var(--yellow);background:linear-gradient(135deg,#2a2210,#10173a);border-radius:10px;padding:16px;margin-top:12px}
+.badge{display:inline-block;padding:4px 10px;border-radius:20px;font-size:10px;font-weight:700}
+.badge-green{background:var(--green);color:#000}.badge-red{background:var(--red);color:#fff}.badge-yellow{background:var(--yellow);color:#000}
+.chatBox{height:280px;overflow-y:auto;background:#080e2a;border:1px solid var(--border);border-radius:10px;padding:10px;display:flex;flex-direction:column;gap:6px}
+.msg{padding:8px 10px;border-radius:8px;max-width:92%;font-size:12px}
+.user{background:var(--cyan);color:#000;align-self:flex-end}.bot{background:var(--card2);color:#c8d6ff;align-self:flex-start;border:1px solid var(--border)}
+input,select{padding:10px 12px;border-radius:8px;border:1px solid var(--border);background:#0a1030;color:#fff;font-family:'Inter';outline:none;font-size:12px}
+.btn{padding:10px 16px;border-radius:8px;border:none;font-weight:600;cursor:pointer;font-size:11px}
+.btn-y{background:var(--yellow);color:#000}.btn-c{background:var(--cyan);color:#000}.btn-g{background:var(--green);color:#000}.btn-r{background:var(--red);color:#fff}
+.highlight{position:absolute;border:2px solid #ff0000;background:rgba(255,235,59,0.4);border-radius:2px}
 </style>
 </head>
 <body>
+<div class="header">
+<div class="logo"><div class="logo-icon">HAL</div><div><h1>AROGYA - Fuel Intelligence System</h1><small>HAL AEROSPACE DIVISION • DGCA COMPLIANT • SHA-256 TRACEABLE</small></div></div>
+<div style="text-align:right"><div id="clock" style="font-family:'JetBrains Mono';font-size:10px;color:#8a9bff"></div><div id="kpiTop" style="font-size:10px;color:var(--yellow);font-weight:600;margin-top:2px">SYSTEM READY</div></div>
+</div>
 <div class="tabs">
-<button class="tab t1" onclick="show(1)">1. LIVE HEALTH + 3D TWIN RED BLINK + 5H + Live Fuel</button>
-<button class="tab t2" onclick="show(2)">2. KAVACH QR SHA + LIVE IMAGE + NUMBER</button>
-<button class="tab t3" onclick="show(3)">3. QUALITY CHECK + CERT + SHA + QR</button>
-<button class="tab t4" onclick="show(4)">4. HAL-GPT PDF + AUTO PAGE OPEN</button>
-<button class="tab t5" onclick="show(5)">5. TAT INTEL INPUT + REPORT</button>
-<button class="tab t6" onclick="show(6)">6. FOD SHOP + USUALLY + DGM MAIL + VOICE KN TA HI EN</button>
+<button class="tab t1 active" onclick="show(1)" id="tt1">LIVE HEALTH</button>
+<button class="tab t2" onclick="show(2)" id="tt2">KAVACH VERIFY</button>
+<button class="tab t3" onclick="show(3)" id="tt3">QUALITY LAB</button>
+<button class="tab t4" onclick="show(4)" id="tt4">MANUAL AI</button>
+<button class="tab t5" onclick="show(5)" id="tt5">TAT INTEL</button>
+<button class="tab t6" onclick="show(6)" id="tt6">FOD + DGM</button>
 </div>
 <div id="critical"></div>
 <div id="tab1" class="box">
-<h3>GREEN SAFE 28-32 PSI - Healthy Wave - Unique Mapping | YELLOW DEGRADED 20-28 PSI - 5H Before Failure Wave | RED CRITICAL &lt;20 PSI - Failure Wave - 50Cr + Lives Saved</h3>
+<div class="kpi-grid"><div class="kpi"><div class="kpi-v" id="livePsi">30.0 PSI</div><div class="kpi-l">LIVE PRESSURE</div></div><div class="kpi"><div class="kpi-v" id="healthKpi">95%</div><div class="kpi-l">HEALTH INDEX</div></div><div class="kpi"><div class="kpi-v" id="rulKpi">20H</div><div class="kpi-l">RUL REMAINING</div></div><div class="kpi"><div class="kpi-v" id="saveKpi">SAFE</div><div class="kpi-l">ASSET STATUS</div></div></div>
 <canvas id="wave"></canvas>
-<div style="display:flex;gap:10px">
-<div style="flex:1"><div id="twin3d">3D Twin: Fuel Filter - <span id="psiTxt">30.0 PSI</span> - <span id="stateTxt">GREEN SAFE</span><br>Live Tracking</div></div>
-<div style="flex:1" class="box">
-Live Fuel: <b id="liveFuel">30.0 PSI</b><br>Health: <b id="health">95%</b><br>RUL: <b id="rul">20H</b><br>50Cr: <b id="save50">SAFE</b><br>Lives: <b>2 Lives Saved when RED</b><br>Fleet: <b>2/Year=100Cr + Extra 2=200Cr/Year = 300Cr</b><br>Alert: <b>5 Hours Before Fuel Damage</b>
-</div>
-</div>
+<div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap"><div style="flex:1;min-width:260px"><div id="twin3d"><span id="psiTxt">30.0 PSI</span>&nbsp;-&nbsp;<span id="stateTxt">NORMAL</span></div></div><div style="flex:1;min-width:260px" class="box" style="margin:0"><div style="font-size:10px;color:#7a86b8">ALH HELICOPTER • FF-3012 FUEL SYSTEM</div><div style="margin-top:8px;font-size:12px">Fuel: <b id="liveFuel">30.0 PSI</b><br>Health: <b id="health">95%</b><br>RUL: <b id="rul">20H</b><br>Status: <b id="save50" style="color:var(--green)">SAFE</b></div></div></div>
 </div>
 <div id="tab2" class="box" style="display:none">
-<h2>2. KAVACH QR SHA + LIVE IMAGE + NUMBER - ORIGINAL / FRAUD LIVE - QR WILL APPEAR BELOW</h2>
-<input id="kavNum" placeholder="Enter e.g. FF-3012-5.2-ORIGINAL-HAL2024 for ORIGINAL" style="width:350px">
-<input type="file" id="kavImg">
-<button onclick="kavach()">VERIFY KAVACH</button>
-<div id="kavRes" class="box" style="min-height:100px"></div>
+<div class="kpi-grid"><div class="kpi"><div class="kpi-v" style="font-size:13px">KAVACH QR Authentication</div><div class="kpi-l">OFFLINE • BLOCKCHAIN VERIFIED • TAMPER DETECTION</div></div><div class="kpi"><div class="kpi-v" id="kavCount" style="font-family:'JetBrains Mono'">0</div><div class="kpi-l">PARTS VERIFIED TODAY</div></div></div>
+<div style="background:var(--card2);border-radius:10px;padding:14px;margin-top:12px;border:1px solid var(--border)">
+<div style="font-weight:600;font-size:12px;margin-bottom:10px">Anti-Counterfeit Verification</div>
+<div style="display:flex;gap:8px;flex-wrap:wrap">
+<input id="kavNum" placeholder="Enter Part Number (e.g. FF-3012-5.2-ORIGINAL)" style="flex:1;min-width:220px" value="FF-3012-5.2-ORIGINAL">
+<input type="file" id="kavImg" accept="image/*" style="flex:1;min-width:160px">
+<button onclick="kavach()" class="btn btn-y">VERIFY PART</button>
+<button onclick="resetKavach()" class="btn" style="background:#1e2a5a;color:#fff">CLEAR</button>
+</div>
+</div>
+<div id="kavRes" class="box" style="background:#080e2a;min-height:200px;border-style:dashed">
+<div style="text-align:center;color:#7a86b8;padding:20px">
+<div style="font-size:32px">🛡️</div>
+<div style="font-weight:600;margin-top:8px;color:#fff">HAL KAVACH Verification System</div>
+<div style="font-size:11px;margin-top:6px;max-width:400px;margin-left:auto;margin-right:auto">Enter HAL standard part number and upload component label image. System performs blockchain authentication and visual label verification. Case-sensitive exact match required.</div>
+<div style="margin-top:12px;font-size:10px"><span class="badge badge-green">ORIGINAL</span> <span class="badge badge-red" style="margin-left:6px">COUNTERFEIT</span> <span class="badge badge-yellow" style="margin-left:6px">ALREADY VERIFIED</span></div>
+</div>
+</div>
 </div>
 <div id="tab3" class="box" style="display:none">
-<h2>3. QUALITY CHECK + CERT + SHA + QR - 5.2 PASS vs 9.8 FRAUD</h2>
-Part: <input id="qcPart" value="FF-3012"> Resistivity: <input id="qcRes" type="number" step="0.1" value="5.2">
-<button onclick="qcCheck()">CHECK QUALITY</button>
-<div id="qcResBox" class="box"></div>
+<h3 style="font-size:13px">Quality Laboratory - Resistivity Analysis</h3>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">Part: <input id="qcPart" value="FF-3012" style="width:110px"> Resistivity: <input id="qcRes" type="number" step="0.1" value="5.2" style="width:90px"> Ω <button onclick="qcCheck()" class="btn btn-g">ANALYZE</button></div>
+<div id="qcResBox" class="box" style="background:#080e2a"></div>
 </div>
 <div id="tab4" class="box" style="display:none">
-<h2>4. HAL-GPT PDF + AUTO PAGE OPEN - Upload Manual + Ask Doubt - PAGE IMAGE AUTO OPEN</h2>
-<input type="file" id="pdfFile" accept=".pdf"><button onclick="uploadPdf()">Upload Manual PDF</button>
-<div id="pdfStatus" class="box"></div>
-Ask: <input id="pdfQ" placeholder="e.g. fuel filter procedure? or fuel leakage?" style="width:350px"><button onclick="askPdf()">Ask HAL-GPT</button>
-<div id="pdfAns" class="box" style="background:#000;color:#0f0;white-space:pre-wrap"></div>
-<div id="pdfPage" class="box" style="background:white;color:black">Auto Opened Page will appear here as IMAGE + TEXT after you ask question</div>
+<div style="background:var(--yellow);color:#000;padding:10px;border-radius:8px;font-weight:600;font-size:11px;text-align:center">HAL-GPT • OFFLINE TECHNICAL MANUAL INTELLIGENCE • MULTI-LANGUAGE VOICE</div>
+<div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px">
+<div style="flex:1;min-width:320px">
+<div style="display:flex;gap:6px"><input type="file" id="pdfFile" accept=".pdf" multiple style="flex:1"><button onclick="uploadPdf()" class="btn btn-c">UPLOAD</button></div>
+<div id="pdfStatus" class="box" style="background:#080e2a;color:var(--green);font-family:'JetBrains Mono';font-size:10px">SYSTEM READY</div>
+<div class="chatBox" id="chatBox"><div class="msg bot">HAL-GPT Ready. Upload technical manual and ask procedures. System returns exact page, paragraph with blockchain citation.</div></div>
+<div style="display:flex;gap:6px;margin-top:8px"><input id="pdfQ" placeholder="Ask procedure?" style="flex:1"><button onclick="askPdf()" class="btn btn-y">ASK</button></div>
+<div style="display:flex;gap:6px;margin-top:8px"><select id="voiceLang4" style="flex:1"><option value="en-IN">English</option><option value="kn-IN">Kannada</option><option value="hi-IN">Hindi</option><option value="ta-IN">Tamil</option></select><button onclick="startVoiceTab4_Offline()" class="btn btn-g" style="flex:1">VOICE ASK</button><button onclick="stopVoice()" class="btn btn-r" style="flex:1">STOP</button></div>
+<div style="display:flex;gap:6px;margin-top:8px"><button onclick="autoReadReport_Offline()" class="btn btn-r" style="flex:1">READ ALOUD</button><button onclick="explainReport_Offline()" class="btn btn-g" style="flex:1">EXPLAIN</button><button onclick="exportAudit()" class="btn" style="flex:1;background:#00e5ff;color:#000">AUDIT PDF</button></div>
+<div id="voiceTxt4" class="box" style="background:#080e2a;font-size:10px">Voice: Idle</div>
+<div id="pdfAns" class="box" style="background:#080e2a;color:#00e676;font-family:'JetBrains Mono';font-size:10px;max-height:70px;overflow:auto"></div>
+</div>
+<div style="flex:1;min-width:340px">
+<div id="pdfMeta" class="box" style="background:#0a1030;border:1px solid var(--green);min-height:60px;font-size:11px">Document citation will appear here</div>
+<div id="alsoAvailable" class="box" style="background:#1a1800;border:1px solid #ffab00;color:#ffab00;min-height:30px;font-size:10px">Cross-reference</div>
+<div id="pdfMatches" class="box" style="background:#0a1030;max-height:120px;overflow:auto;font-size:10px">Related references</div>
+<div style="display:flex;gap:6px"><button onclick="prevPage()" class="btn" style="background:#151e4a;color:#fff">Prev</button><span id="curPageLbl" class="box" style="flex:1;text-align:center;margin:0;font-family:'JetBrains Mono';font-size:10px">Page -</span><button onclick="nextPage()" class="btn" style="background:#151e4a;color:#fff">Next</button><button onclick="zoomIn()" class="btn" style="background:#151e4a;color:#fff">+</button><button onclick="zoomOut()" class="btn" style="background:#151e4a;color:#fff">-</button></div>
+<div id="pdfPage" class="box" style="background:#fff;color:#000;min-height:400px;text-align:center;overflow:auto;position:relative;padding:4px"><img id="pdfImage" style="width:100%;display:none"><div id="hlOverlay" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none"></div></div>
+</div>
+</div>
 </div>
 <div id="tab5" class="box" style="display:none">
-<h2>5. TAT INTEL INPUT + REPORT</h2>
-Vendor: <input id="tatVendor" value="HAL Nashik"> Part: <input id="tatPart" value="FF-3012"> TAT Days: <input id="tatDays" type="number" value="15">
-<button onclick="tatSubmit()">Submit TAT + Report</button>
-<div id="tatReport" class="box"></div>
+<h3 style="font-size:13px">TAT Intelligence - Vendor Performance</h3>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">Vendor: <input id="tatVendor" value="HAL Nashik"> Part: <input id="tatPart" value="FF-3012"> TAT: <input id="tatDays" type="number" value="15" style="width:80px"> <button onclick="tatSubmit()" class="btn" style="background:#d500f9;color:#fff">ANALYZE</button></div>
+<div id="tatReport" class="box" style="background:#080e2a"></div>
+<div id="auditTrail5" class="box" style="background:#080e2a;max-height:180px;overflow:auto;font-family:'JetBrains Mono';font-size:10px"></div>
 </div>
 <div id="tab6" class="box" style="display:none">
-<h2>6. FOD SHOP FLOOR + USUALLY + TYPE + DGM MAIL + VOICE KN TA HI EN - App HAL AROGYA - anjumrahath7@gmail.com</h2>
-<div style="display:flex;gap:20px;flex-wrap:wrap">
-<div><b>FOD Shop Floor:</b><br><input type="file" id="fodImg"><br>Usually: <input id="fodUsually" placeholder="e.g. Metal Chip"><br><button onclick="fodDetect()">DETECT FOD TYPE</button><div id="fodRes" class="box"></div></div>
-<div><b>VOICE KN TA HI EN:</b><br><select id="voiceLang"><option value="en-IN">English</option><option value="kn-IN">Kannada</option><option value="ta-IN">Tamil</option><option value="hi-IN">Hindi</option></select><button onclick="startVoice()">🎤 Start Voice</button><div id="voiceTxt" class="box">Say: "Generate DGM mail"</div></div>
+<h3 style="font-size:13px">FOD Detection + DGM Alert System</h3>
+<div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:10px">
+<div style="flex:1;min-width:260px"><b style="font-size:11px">FOD Detection</b><br><input type="file" id="fodImg" accept="image/*" style="margin-top:6px"><br><input id="fodUsually" placeholder="Expected FOD Type" style="margin-top:6px;width:100%"><button onclick="fodDetect()" class="btn btn-r" style="margin-top:6px;width:100%">SCAN FOR FOD</button><div id="fodRes" class="box" style="background:#080e2a"></div></div>
+<div style="flex:1;min-width:260px"><b style="font-size:11px">Critical Alert</b><br><div style="display:flex;gap:6px;margin-top:6px"><select id="voiceLang" style="flex:1"><option value="en-IN">English</option><option value="kn-IN">Kannada</option></select><button onclick="startVoice()" class="btn btn-g">VOICE</button></div><div id="voiceTxt" class="box" style="background:#080e2a;font-size:10px">Voice command: Generate DGM mail</div><button onclick="genDGM()" style="padding:12px;background:var(--red);color:#fff;width:100%;border-radius:8px;font-weight:700;border:none;cursor:pointer;margin-top:6px">GENERATE DGM CRITICAL ALERT</button><div id="dgmRes" class="box" style="background:#080e2a"></div></div>
 </div>
-<hr>
-<button onclick="genDGM()" style="padding:15px;background:red;color:white;font-size:18px;width:100%">🚨 GENERATE DGM EMAIL + SEND REAL MAIL to anjumrahath7@gmail.com - Mobile Gmail - App HAL AROGYA Password orpr qdbl wcjp ckqq Configured</button>
-<div id="dgmRes" class="box"></div>
 </div>
 <script>
-let c=document.getElementById('wave'), x=c.getContext('2d'); c.width=1200; c.height=280;
-let data=[], psi=30, state='GREEN', t=0, countdown=25;
+let c=document.getElementById('wave'), x=c.getContext('2d'); c.width=1200; c.height=300; let data=[], psi=30, state='GREEN', t=0, countdown=25;
 function draw(v,s){
  data.push(v); if(data.length>120) data.shift();
  x.clearRect(0,0,c.width,c.height);
- x.fillStyle='#1b5e20'; x.fillRect(0,0,c.width,85);
- x.fillStyle='#f9a825'; x.fillRect(0,85,c.width,85);
- x.fillStyle='#b71c1c'; x.fillRect(0,170,c.width,110);
- x.fillStyle='#fff'; x.font='11px Arial';
- x.fillText('GREEN SAFE 28-32 PSI - Healthy Wave - Unique Mapping',10,20);
- x.fillText('YELLOW DEGRADED 20-28 PSI - 5H Before Failure Wave',10,110);
- x.fillText('RED CRITICAL <20 PSI - Failure Wave - 50Cr + Lives Saved',10,190);
- x.beginPath(); x.strokeStyle='#00ffff'; x.lineWidth=2;
- data.forEach((p,i)=>{ let y=280 - (p*7); if(i==0) x.moveTo(i*10,y); else x.lineTo(i*10,y); }); x.stroke();
- document.getElementById('psiTxt').innerText=v.toFixed(1)+' PSI'; document.getElementById('liveFuel').innerText=v.toFixed(1)+' PSI';
- document.getElementById('stateTxt').innerText=s; document.getElementById('stateTxt').className=s.toLowerCase();
+ x.fillStyle='#1b5e20'; x.fillRect(0,0,c.width,90);
+ x.fillStyle='#f9a825'; x.fillRect(0,90,c.width,90);
+ x.fillStyle='#b71c1c'; x.fillRect(0,180,c.width,140);
+ x.beginPath(); x.strokeStyle='#00e5ff'; x.lineWidth=2.5;
+ data.forEach((p,i)=>{ let y=300 - (p*7); if(i==0) x.moveTo(i*10,y); else x.lineTo(i*10,y); });
+ x.stroke();
+ document.getElementById('psiTxt').innerText=v.toFixed(1)+' PSI';
+ document.getElementById('liveFuel').innerText=v.toFixed(1)+' PSI';
+ document.getElementById('livePsi').innerText=v.toFixed(1)+' PSI';
  let h= s=='GREEN'? 85+Math.random()*10 : s=='YELLOW'? 45+Math.random()*20 : 8+Math.random()*15;
  document.getElementById('health').innerText=h.toFixed(0)+'%';
- document.getElementById('rul').innerText= s=='GREEN'? '15-20H' : s=='YELLOW'? '5H Before Failure - Alert!' : '0H - REPLACE NOW';
- document.getElementById('save50').innerText= s=='RED'? '50Cr SAVED + 2 Lives' : 'SAFE - Tracking Live Fuel';
+ document.getElementById('healthKpi').innerText=document.getElementById('health').innerText;
+ document.getElementById('rul').innerText= s=='GREEN'? '15-20H' : s=='YELLOW'? '5H Warning' : '0H - REPLACE';
+ document.getElementById('rulKpi').innerText=document.getElementById('rul').innerText;
+ document.getElementById('saveKpi').innerText=document.getElementById('save50').innerText;
+ document.getElementById('save50').innerText= s=='RED'? '50Cr + 2 Lives Saved' : 'SAFE';
  let twin=document.getElementById('twin3d');
- if(s=='RED'){ document.getElementById('critical').style.display='block'; twin.classList.add('redblink'); document.getElementById('critical').innerHTML=`🔴 CRITICAL RED ALERT: Fuel Failure in 0 Hours! 5 Hours Before Fuel Damage Failure! Fuel Pressure ${v.toFixed(1)} PSI RED ZONE! Replace FF-3012 NOW! 50Cr Aeroplane Saved + 2 Lives Saved | Fleet: 2/Year=100Cr + Extra 2=200Cr/Year = 300Cr | DGCA Ground Aircraft | Live Fuel Tracking RED`; }
- else { document.getElementById('critical').style.display='none'; twin.classList.remove('redblink'); }
+ if(s=='RED'){ document.getElementById('critical').style.display='block'; twin.style.background='#3a1010'; document.getElementById('critical').innerHTML=`CRITICAL ALERT: Fuel Failure Imminent - Pressure ${v.toFixed(1)} PSI - Replace FF-3012 Immediately`; }
+ else { document.getElementById('critical').style.display='none'; twin.style.background='var(--card2)'; }
 }
-setInterval(()=>{
- t++;
- if(state=='GREEN'){ psi=28+Math.random()*4 + Math.sin(Date.now()/1000)*0.6; if(t>35 && Math.random()>0.65){ state='YELLOW'; t=0; countdown=22; } }
- else if(state=='YELLOW'){ psi=21+Math.random()*6.5 + Math.sin(Date.now()/700)*1; countdown--; if(countdown<=0 || Math.random()>0.88){ state='RED'; t=0; psi=12+Math.random()*6; } }
- else if(state=='RED'){ psi=10+Math.random()*8; if(t>20){ state='GREEN'; t=0; psi=30; } else if(t>12 && Math.random()>0.6){ state='YELLOW'; t=0; psi=22+Math.random()*4; countdown=10; } }
- draw(psi, state);
-}, 450);
-function show(n){ for(let i=1;i<=6;i++) document.getElementById('tab'+i).style.display = i==n?'block':'none'; }
+setInterval(()=>{ t++; if(state=='GREEN'){ psi=28+Math.random()*4 + Math.sin(Date.now()/1000)*0.6; if(t>35 && Math.random()>0.65){ state='YELLOW'; t=0; countdown=22; } } else if(state=='YELLOW'){ psi=21+Math.random()*6.5 + Math.sin(Date.now()/700)*1; countdown--; if(countdown<=0 || Math.random()>0.88){ state='RED'; t=0; psi=12+Math.random()*6; } } else if(state=='RED'){ psi=10+Math.random()*8; if(t>20){ state='GREEN'; t=0; psi=30; } else if(t>12 && Math.random()>0.6){ state='YELLOW'; t=0; psi=22+Math.random()*4; countdown=10; } } draw(psi, state); }, 450);
+function show(n){ for(let i=1;i<=6;i++){ document.getElementById('tab'+i).style.display=i==n?'block':'none'; document.getElementById('tt'+i).classList.remove('active'); } document.getElementById('tt'+n).classList.add('active'); if(n==5) refreshStats(); }
+let kavCount=0;
 function kavach(){
  let fd=new FormData(); fd.append('number', document.getElementById('kavNum').value);
  let f=document.getElementById('kavImg').files[0]; if(f) fd.append('image', f);
+ document.getElementById('kavRes').innerHTML=`<div style="text-align:center;padding:20px;color:#8a9bff">Verifying... Blockchain check in progress</div>`;
  fetch('/kavach_verify',{method:'POST',body:fd}).then(r=>r.json()).then(d=>{
-   document.getElementById('kavRes').innerHTML=`<b style="color:${d.color};font-size:22px">${d.result}</b><br>Number: ${d.number}<br>SHA256: ${d.sha256}<br>Blockchain: ${d.blockchain}<br>${d.details}<br>${d.image_status}<br><br><b>QR CODE (100% Offline):</b><br><img src="${d.qr_base64}" style="width:220px;height:220px;background:white;padding:10px;border:2px solid ${d.color}"><br>Data: ${d.qr_data}`;
+  kavCount++; document.getElementById('kavCount').innerText=kavCount;
+  let cardClass = d.color=='lime' ? 'verified-card' : d.color=='orange' ? 'warning-card' : 'fraud-card';
+  let badgeClass = d.color=='lime' ? 'badge-green' : d.color=='orange' ? 'badge-yellow' : 'badge-red';
+  let icon = d.color=='lime' ? '✓' : d.color=='orange' ? '⚠' : '✕';
+  document.getElementById('kavRes').innerHTML=`
+  <div class="${cardClass}">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div><span class="badge ${badgeClass}">${icon} ${d.result_title}</span></div>
+      <div style="font-family:'JetBrains Mono';font-size:10px;color:#8a9bff">BLOCKCHAIN ${d.blockchain}</div>
+    </div>
+    <div style="font-weight:600;font-size:14px;margin-top:10px;color:#fff">${d.result_desc}</div>
+    <div style="margin-top:10px;display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:11px">
+      <div><div style="color:#7a86b8;font-size:9px;letter-spacing:0.8px">PART NUMBER</div><div style="font-family:'JetBrains Mono';margin-top:2px">${d.number}</div></div>
+      <div><div style="color:#7a86b8;font-size:9px">VISUAL VERIFICATION</div><div style="margin-top:2px">${d.visual_status}</div></div>
+      <div><div style="color:#7a86b8;font-size:9px">SHA-256 TRACE</div><div style="font-family:'JetBrains Mono';font-size:10px;margin-top:2px">${d.sha256.substring(0,24)}...</div></div>
+      <div><div style="color:#7a86b8;font-size:9px">STATUS</div><div style="margin-top:2px">${d.image_status}</div></div>
+    </div>
+    <div style="margin-top:14px;display:flex;gap:12px;align-items:center">
+      <img src="${d.qr_base64}" style="width:90px;background:white;padding:6px;border-radius:8px">
+      <div style="font-size:10px;color:#7a86b8">QR contains blockchain hash for DGCA audit trail. Scan to verify authenticity in HAL database.</div>
+    </div>
+  </div>`;
  });
 }
-function qcCheck(){
- fetch('/quality_check',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({part_no: document.getElementById('qcPart').value, resistivity: document.getElementById('qcRes').value})}).then(r=>r.json()).then(d=>{
-   document.getElementById('qcResBox').innerHTML=`<b style="font-size:18px">${d.result}</b><br>Resistivity: ${d.resistivity} ohm | ${d.standard}<br>Cert: ${d.certificate}<br>SHA: ${d.sha}<br><img src="${d.qr_base64}" style="width:180px;background:white;padding:8px">`;
- });
-}
-function uploadPdf(){
- let fd=new FormData(); fd.append('pdf', document.getElementById('pdfFile').files[0]);
- fetch('/upload_manual',{method:'POST',body:fd}).then(r=>r.json()).then(d=>{ document.getElementById('pdfStatus').innerText=`Uploaded ${d.file} - ${d.pages} pages - Ready to ask`; });
-}
-function askPdf(){
- let q=document.getElementById('pdfQ').value;
- if(!q){ alert("Type question e.g. fuel filter procedure?"); return; }
- fetch('/ask_manual',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question: q})}).then(r=>r.json()).then(d=>{
-   document.getElementById('pdfAns').innerText=d.answer + "\n" + d.auto_open;
-   document.getElementById('pdfPage').innerHTML=`<b style="color:lime">✅ Auto Opened Page ${d.page} - REAL PDF PAGE AS IMAGE:</b><br><div style="background:#eee;color:#000;padding:8px;white-space:pre-wrap;border:1px solid #000">${d.procedure}</div><br><img src="/pdf_page/${d.page}?t=${Date.now()}" style="width:100%;border:4px solid lime;background:white">`;
- });
-}
-function tatSubmit(){
- fetch('/tat_input',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({vendor: document.getElementById('tatVendor').value, part: document.getElementById('tatPart').value, tat_days: document.getElementById('tatDays').value})}).then(r=>r.json()).then(d=>{
-   document.getElementById('tatReport').innerHTML=`<b>${d.report}</b><br>History: ${JSON.stringify(d.history)}`;
- });
-}
+function resetKavach(){ fetch('/reset_kavach',{method:'POST'}).then(r=>r.json()).then(d=>{ document.getElementById('kavRes').innerHTML=`<div style="text-align:center;color:#7a86b8;padding:20px">Verification history cleared. Ready for next scan.</div>`; document.getElementById('kavCount').innerText='0'; kavCount=0; }); }
+function qcCheck(){ fetch('/quality_check',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({part_no: document.getElementById('qcPart').value, resistivity: document.getElementById('qcRes').value})}).then(r=>r.json()).then(d=>{ document.getElementById('qcResBox').innerHTML=`<b style="color:${d.result.includes('PASS')?'#00e676':'#ff1744'}">${d.result}</b><br>${d.resistivity} ohm | ${d.standard}<br>${d.certificate}<br>SHA ${d.sha}<br><img src="${d.qr_base64}" style="width:120px;background:white;padding:6px;border-radius:8px;margin-top:6px">`; }); }
+let currentFile="",currentPage=1,lastResult=null,recognition=null,currentAudio=null;
+function addMsg(t,w){ let b=document.getElementById('chatBox'); let d=document.createElement('div'); d.className='msg '+w; d.innerHTML=t; b.appendChild(d); b.scrollTop=b.scrollHeight; }
+function uploadPdf(){ let files=document.getElementById('pdfFile').files; if(!files.length){alert("Select PDF");return;} let fd=new FormData(); for(let f of files) fd.append('pdf',f); fetch('/upload_manual',{method:'POST',body:fd}).then(r=>r.json()).then(d=>{ document.getElementById('pdfStatus').innerText=`Indexed ${d.files.join(', ')} - ${d.paras} paras - SHA ${d.sha}`; addMsg(`Indexed ${d.files.join(', ')}`, 'bot'); currentFile=d.file; refreshStats(); }); }
+function askPdf(){ let q=document.getElementById('pdfQ').value.trim(); if(!q){alert("Type question");return;} addMsg(q,'user'); document.getElementById('pdfQ').value=''; fetch('/ask_manual',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question:q})}).then(r=>r.json()).then(d=>{ if(d.error){addMsg(d.error,'bot');return;} lastResult=d; document.getElementById('pdfAns').innerText=d.answer; document.getElementById('pdfMeta').innerHTML=`<b style="color:#00e676">${d.file} Page ${d.page} ${d.matches[0].type} SHA ${d.sha}</b><br><b>Citation:</b> ${d.citation}<br><br><div style="background:#000;color:#0f0;padding:8px;white-space:pre-wrap;border-radius:6px">${d.para_text.substring(0,600)}</div>`; document.getElementById('alsoAvailable').innerHTML=`Also: ${d.also_available}`; let html=`Other refs:<br>`; d.matches.forEach(m=>{ html+=`<div onclick="openBackendPage('${m.file}',${m.page})" style="cursor:pointer;border:1px solid #1d2758;padding:6px;margin:4px;background:#151e4a;border-radius:6px"><b>${m.file} Page ${m.page}</b><br><small>${m.para.substring(0,80)}...</small></div>`; }); document.getElementById('pdfMatches').innerHTML=html; openBackendPage(d.file,d.page,d.highlights); }); }
+function openBackendPage(file,page,highlights){ currentFile=file; currentPage=page; document.getElementById('curPageLbl').innerText=`${file} Page ${page} Loading`; let img=document.getElementById('pdfImage'); img.style.display='block'; img.src=`/pdf_page/${encodeURIComponent(file)}/${page}?t=${Date.now()}`; img.onload=()=>{ document.getElementById('curPageLbl').innerText=`${file} Page ${page}`; let ov=document.getElementById('hlOverlay'); ov.innerHTML=''; if(highlights){ highlights.forEach(h=>{ let div=document.createElement('div'); div.className='highlight'; div.style.left=(h.x0/h.page_width*100)+'%'; div.style.top=(h.y0/h.page_height*100)+'%'; div.style.width=((h.x1-h.x0)/h.page_width*100)+'%'; div.style.height=((h.y1-h.y0)/h.page_height*100)+'%'; ov.appendChild(div); }); } }; }
+function prevPage(){ if(currentPage>1) openBackendPage(currentFile,currentPage-1); }
+function nextPage(){ openBackendPage(currentFile,currentPage+1); }
+function zoomIn(){ let img=document.getElementById('pdfImage'); img.style.width=(img.clientWidth*1.1)+'px'; }
+function zoomOut(){ let img=document.getElementById('pdfImage'); img.style.width=(img.clientWidth*0.9)+'px'; }
+function stopVoice(){ try{speechSynthesis.cancel();}catch(e){} try{if(recognition) recognition.abort();}catch(e){} try{if(currentAudio){currentAudio.pause(); currentAudio.currentTime=0; currentAudio=null;}}catch(e){} document.getElementById('voiceTxt4').innerText="Stopped"; }
+function startVoiceTab4_Offline(){ let lang=document.getElementById('voiceLang4').value; document.getElementById('voiceTxt4').innerText="Listening "+lang+"..."; let SR=window.SpeechRecognition||window.webkitSpeechRecognition; if(!SR){document.getElementById('voiceTxt4').innerText="Use Chrome";return;} recognition=new SR(); recognition.lang=lang; recognition.onresult=(e)=>{ let txt=e.results[0][0].transcript; document.getElementById('voiceTxt4').innerText="Heard: "+txt; document.getElementById('pdfQ').value=txt; askPdf(); }; recognition.start(); }
+function playRealAudio(t,lang,url){ stopVoice(); if(url){ currentAudio=new Audio(url); currentAudio.onended=()=>{document.getElementById('voiceTxt4').innerText="Finished "+lang; currentAudio=null;}; currentAudio.play(); } }
+async function autoReadReport_Offline(){ if(!lastResult){document.getElementById('voiceTxt4').innerText="Search first";return;} let lang=document.getElementById('voiceLang4').value; document.getElementById('voiceTxt4').innerText="Translating "+lang+"..."; let res=await fetch('/offline_tts',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lang:lang,mode:'read'})}); let data=await res.json(); document.getElementById('pdfMeta').innerHTML+=`<br><div style="background:#000;color:#ffeb3b;padding:10px;border:1px solid yellow;border-radius:8px"><b>Audio [${lang}]:</b><br>${data.translated}<br><br><audio controls autoplay src="${data.audio_url}" style="width:100%"></audio></div>`; playRealAudio(data.translated,lang,data.audio_url); }
+async function explainReport_Offline(){ if(!lastResult){document.getElementById('voiceTxt4').innerText="Search first";return;} let lang=document.getElementById('voiceLang4').value; let res=await fetch('/offline_tts',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({lang:lang,mode:'explain'})}); let data=await res.json(); document.getElementById('pdfMeta').innerHTML+=`<br><div style="background:#002200;color:#00e676;padding:10px;border:1px solid lime;border-radius:8px"><b>Explain [${lang}]:</b><br>${data.translated}<br><br><audio controls autoplay src="${data.audio_url}" style="width:100%"></audio></div>`; playRealAudio(data.translated,lang,data.audio_url); }
+function exportAudit(){ fetch('/export_audit',{method:'POST'}).then(r=>r.json()).then(d=>{ if(d.file) window.open(`/uploads/${d.file}`,'_blank'); }); }
+function tatSubmit(){ fetch('/tat_input',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({vendor: document.getElementById('tatVendor').value, part: document.getElementById('tatPart').value, tat_days: document.getElementById('tatDays').value})}).then(r=>r.json()).then(d=>{ document.getElementById('tatReport').innerHTML=`<b style="color:#00e676">${d.report}</b><br>${JSON.stringify(d.history)}`; refreshStats(); }); }
 function fodDetect(){
- let fd=new FormData(); let f=document.getElementById('fodImg').files[0]; if(f) fd.append('image', f); fd.append('usually', document.getElementById('fodUsually').value);
- fetch('/fod_detect',{method:'POST',body:fd}).then(r=>r.json()).then(d=>{
-   document.getElementById('fodRes').innerHTML=`<b>Detected: ${d.detected}</b><br>Confidence: ${d.confidence}<br>Action: ${d.action}`;
- });
+  let fd=new FormData();
+  let f=document.getElementById('fodImg').files[0];
+  if(f) fd.append('image',f);
+  fd.append('usually',document.getElementById('fodUsually').value);
+  let box = document.getElementById('fodRes');
+  if(!f){ box.innerHTML=`<div style="color:#ff1744;padding:10px">Please select an image first</div>`; return; }
+  let reader = new FileReader();
+  reader.onload = function(e){
+    box.innerHTML = `<img src="${e.target.result}" style="width:100%;border-radius:8px;border:1px solid #1d2758"><div style="text-align:center;color:#8a9bff;padding:10px">Scanning... FOD detection in progress</div>`;
+  };
+  reader.readAsDataURL(f);
+  fetch('/fod_detect',{method:'POST',body:fd}).then(r=>r.json()).then(d=>{
+    let isDanger = d.action.includes('STOP');
+    let color = isDanger ? '#ff1744' : '#00e676';
+    let imgHtml = d.image ? `<img src="${d.image}" style="width:100%;border-radius:8px;border:1px solid #1d2758">` : '';
+    box.innerHTML = `${imgHtml}<div style="margin-top:10px;padding:12px;border-left:4px solid ${color};background:#0a1030;border-radius:8px"><b style="color:${color};font-size:13px">${d.detected}</b><br><div style="margin-top:6px;font-size:11px">Confidence: <b>${d.confidence}</b></div><div style="font-size:11px">Action: <b>${d.action}</b></div></div>`;
+  }).catch(e=>{ box.innerHTML=`<div style="color:#ff1744;padding:10px">Error: ${e}</div>`; });
 }
-function genDGM(){
- fetch('/generate_dgm_mail',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({psi: psi, state: state})}).then(r=>r.json()).then(d=>{
-   document.getElementById('dgmRes').innerHTML=`<b style="color:lime">SUCCESS - Product Proof - HAL AROGYA App Configured</b><br>Subject: ${d.subject}<br>To: ${d.to}<br>Offline.eml: ${d.eml_file}<br><b>Online Mobile: ${d.real_mail}</b><br><br>Check Gmail App on Mobile - Inbox + Spam!`;
- });
-}
-function startVoice(){
- let lang=document.getElementById('voiceLang').value;
- let rec=new (window.SpeechRecognition || window.webkitSpeechRecognition)();
- rec.lang=lang; rec.start();
- rec.onresult=(e)=>{
-   let txt=e.results[0][0].transcript; document.getElementById('voiceTxt').innerText="You said: "+txt;
-   txt=txt.toLowerCase();
-   if(txt.includes('health')) show(1);
-   else if(txt.includes('kavach') || txt.includes('qr')) show(2);
-   else if(txt.includes('quality')) show(3);
-   else if(txt.includes('manual') || txt.includes('pdf')) show(4);
-   else if(txt.includes('tat')) show(5);
-   else if(txt.includes('fod') || txt.includes('mail') || txt.includes('dgm')){ show(6); if(txt.includes('mail')) genDGM(); }
- };
-}
+function startVoice(){ let lang=document.getElementById('voiceLang').value; let SR=window.SpeechRecognition||window.webkitSpeechRecognition; if(!SR) return; recognition=new SR(); recognition.lang=lang; recognition.onresult=(e)=>{ let txt=e.results[0][0].transcript; document.getElementById('voiceTxt').innerText="Heard: "+txt; if(txt.toLowerCase().includes("dgm")||txt.toLowerCase().includes("mail")) genDGM(); }; recognition.start(); }
+function genDGM(){ fetch('/generate_dgm_mail',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({psi: document.getElementById('livePsi').innerText})}).then(r=>r.json()).then(d=>{ document.getElementById('dgmRes').innerHTML=`<b>${d.subject}</b><br><span style="color:#00e676">${d.real_mail}</span><br><br>${d.body}<br><small>${d.eml_file}</small>`; }); }
+function refreshStats(){ fetch('/get_stats').then(r=>r.json()).then(d=>{ document.getElementById('kpiTop').innerText=`${d.files.length} MANUALS • ${d.paras} PARAS INDEXED`; let trail=(d.logs||[]).map(l=>`<div style='border-bottom:1px solid #1d2758;padding:6px'><span style='color:#7a86b8'>${l.time}</span> | ${l.action} | <span style='color:#ffc400'>${l.sha}</span></div>`).join(''); document.getElementById('auditTrail5').innerHTML=trail||"No logs"; }); }
+setInterval(()=>{ document.getElementById('clock').innerText=new Date().toLocaleString('en-IN',{hour12:true}); },1000);
+show(2); refreshStats();
 </script>
 </body>
 </html>
