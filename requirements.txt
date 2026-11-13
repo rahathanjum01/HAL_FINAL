@@ -1,2 +1,10 @@
 flask
 qrcode[pil]
+PyMuPDF
+scikit-learn
+gTTS
+deep-translator
+reportlab
+qrcode
+pyttsx3
+python-dotenv
